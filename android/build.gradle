@@ -1,0 +1,33 @@
+buildscript {
+    ext.kotlin_version = '2.0.0' // Use Kotlin 2.0.0
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.1' // Upgrade to AGP 8.2.1
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.1' // For Firebase
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9' // For Firebase Crashlytics
+        classpath 'com.google.firebase:perf-plugin:1.4.2' // For Firebase Performance Monitoring
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
